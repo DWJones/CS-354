@@ -11,6 +11,12 @@
 
 \DeclareMathOperator{\power}{\mathcal{P}}
 
+\newcommand{\Va}{\mathcal{VA}}
+\newcommand{\Lit}{\mathcal{LIT}}
+\newcommand{\Cl}{\mathcal{CL}}
+\newcommand{\Cls}{\mathcal{CLS}}
+
+
 \begin{document}
 
 \title{Understanding how to attack DES via SAT}
@@ -70,17 +76,17 @@ What is SAT? (brief introduction to the topic(defining definitions and how to bu
 \subsection{Syntax and semantics for propositional logic}
 \label{sec:syntaxsem}
 
-A propositional variable is the starting point of propositional logic and is a alphabetic symbol that represents a object or number which is subject to change or is not known. We will refer to a set of variables as \textit{\textbf{VA}}. Let $a$ stand for all variables, $a$ $\in$ \textit{\textbf{VA}}. The symbol $\top$ will be used to show that a formula is always true and $\bot$ for when a formula is always false. The symbol $\neg$ will be used to show the negation of an object. The binary symbols $\land$ (conjunction), $\lor$ (disjunction), $\Rightarrow$ (implies) and $\equiv$ (equivalence) will be used throughout this paper and are known as \textit{functors} (see \cite{Marek2009Introduction}). A propositional formula is defined as a set of strings over the set $Var$ such that \{\textit{Form} : $a, \neg, \top, \bot, \land, \lor, \Rightarrow, \equiv \in Form$\}. A literal is a variable that is either positive or negative (denoted by the negation symbol) which will be referred to as \textbf{\textit{LIT}} =  \textit{\textbf{VA}} $\cup \{ \bar{v} : v \in$ \textbf{\textit{VA}}\}, for a set of literals. A clause is a formula in the form $l_1 \lor$ ... $\lor l_k$, where each $l_j$, 1 $\le$ \textit{j} $\le$ \textit{k} is a \textit{literal} (see\cite{Marek2009Introduction}). We will refer to a set of clauses as \textbf{\textit{CL}} := \{C $\subseteq$ \textbf{\textit{LIT}} C $\cap \bar{C} = \emptyset$\}. A set of clause-set's contains \textbf{\textit{CL}} which we will refer as \textbf{\textit{CLS}} := \{$F \subseteq$ \textit{\textbf{CL}}\}. 
+A propositional variable is the starting point of propositional logic and is a alphabetic symbol that represents a object or number which is subject to change or is not known. We will refer to a set of variables as $\Va$. Let $a$ stand for all variables, $a$ $\in$ \textit{\textbf{VA}}. The symbol $\top$ will be used to show that a formula is always true and $\bot$ for when a formula is always false. The symbol $\neg$ will be used to show the negation of an object. The binary symbols $\land$ (conjunction), $\lor$ (disjunction), $\Rightarrow$ (implies) and $\equiv$ (equivalence) will be used throughout this paper and are known as \textit{functors} (see \cite{Marek2009Introduction}). A propositional formula is defined as a set of strings over the set $Var$ such that \{\textit{Form} : $a, \neg, \top, \bot, \land, \lor, \Rightarrow, \equiv \in Form$\}. A literal is a variable that is either positive or negative (denoted by the negation symbol) which will be referred to as \textbf{\textit{LIT}} =  \textit{\textbf{VA}} $\cup \{ \bar{v} : v \in$ \textbf{\textit{VA}}\}, for a set of literals. A clause is a formula in the form $l_1 \lor$ ... $\lor l_k$, where each $l_j$, 1 $\le$ \textit{j} $\le$ \textit{k} is a \textit{literal} (see\cite{Marek2009Introduction}). We will refer to a set of clauses as \textbf{\textit{CL}} := \{C $\subseteq$ \textbf{\textit{LIT}} C $\cap \bar{C} = \emptyset$\}. A set of clause-set's contains \textbf{\textit{CL}} which we will refer as \textbf{\textit{CLS}} := \{$F \subseteq$ \textit{\textbf{CL}}\}. 
+
 
 \subsection{Boolean logic}
 \label{sec:bool}
 
-Boolean logic is referred to as two valued logic. This is because two values are used to determine if something is true of false. \emph{True} is represented as $1$ and \emph{false} is $0$. The structure of Boolean logic is:
-\begin{displaymath}
-\text{Bool} = \langle \lor, \land, \neg, \Rightarrow, \equiv,\{0,1\}, 0, 1 \rangle
-\end{displaymath}
+Boolean logic is referred to as two-valued logic. This is because two values are used to determine if something is true of false. \texttt{True} is represented as $1$ and \texttt{false} is $0$. The connectives are $\lor, \land, \neg, \rightarrow, \leftrightarrow$.
 
-The arguments for the Bool algebra operations can be shown in truth tables. A truth table computes the logical values that are given to their corresponding value over a given operation. An example of this would be the negation of $p$ which would be $\neg p$. 
+XXX
+
+The semantics for the connectives are shown in truth tables. A \emph{truth table} computes the logical values that are given to their corresponding value over a given operation. An example of this would be the negation of $p$ which would be $\neg p$. 
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
