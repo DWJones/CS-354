@@ -134,13 +134,13 @@ We use the following \textbf{formal notation}:
 \begin{description}
 \item[M] Message
 \item[P] Plain text
+\item[C] Cipher text
+\item[K] Key
+\item[E] Encryption algorithm
+\item[D] Decryption algorithm
+\item[E$_{K}$] Encryption Key 
+\item[D$_{K}$] Decryption Key
 \end{description}
-C = Cipher text
-K = Key
-E = Encryption algorithm
-D = Decryption algorithm
-E$_{K}$ = Encryption Key
-D$_{K}$ = Decryption Key
 
 \section{General Cryptography}
 \label{sec:GenCrypt}
@@ -160,7 +160,7 @@ P = D (K, C)
 The notation for decrypting shows that putting the Cipher text and key together in the decryption algorithm will output a Cipher text.
 
 \textbf{Symmetric and asymmetric encryption}
-Symmetric-key encryption schemes provide secure communication for a pair of communication partners \cite{DBLP:series/isc/DelfsK07}. Symmetric-key encryption algorithms have the fastest implementations in hardware and software. Therefore, they are very well-suited to the encryption of large amounts of data \cite{DBLP:series/isc/DelfsK07}. In symmetric encryption the encryption key will always be the same as the decryption key. We there for say within asymmetric encryption that E$_{K}$ = D$_{K}$. This is seen and proven in the encryption and decryption notation as both P and C can be interchanged to produce either the Plain text or Cipher text respectively.In asymmetric encryption the encryption key and decryption key are unique and the computation of decryption from encryption is infeasible. Compared to symmetric encryption, the asymmetric encryption key can be made public \cite{DBLP:series/isc/DelfsK07}. However the decryption key is still kept a secret. Because anyone can use the encryption key it is called the “public” key. For a public key it is useful to have two different key spaces since the public key and the private key are shaped differently \cite{DBLP:series/isc/DelfsK07}.
+Symmetric-key encryption schemes provide secure communication for a pair of communication partners \cite{DBLP:series/isc/DelfsK07}. Symmetric-key encryption algorithms have the fastest implementations in hardware and software. Therefore, they are very well-suited to the encryption of large amounts of data \cite{DBLP:series/isc/DelfsK07}. In symmetric encryption the encryption key will always be the same as the decryption key. We there for say within asymmetric encryption that E$_{K}$ = D$_{K}$. This as a result is a intervertebral function, as using a key we can obtain a cipher text, and additionally using the same key, we can obtain the plain text. This is seen and proven in the encryption and decryption notation as both P and C can be interchanged to produce either the Plain text or Cipher text respectively. In asymmetric encryption the encryption key and decryption key are unique and the computation of decryption from encryption is infeasible. Compared to symmetric encryption, the asymmetric encryption key can be made public \cite{DBLP:series/isc/DelfsK07}. However the decryption key is still kept a secret. Because anyone can use the encryption key it is called the “public” key. For a public key it is useful to have two different key spaces since the public key and the private key are shaped differently \cite{DBLP:series/isc/DelfsK07}.
 
 \textbf{RSA}
 RSA is named after its inventors Ron Rivest, Adi Shamir and Len Adleman. RSA was the first public-key cryptosystem and is still one of the most important \cite{DBLP:series/isc/DelfsK07}. The most important thing to note about RSA is that it is an asymmetric encryption method and so therefore has a public key and a private key. Both keys however are mathematically linked. The public key is known to everyone and is used to decrypt messages. On the other hand the private key is used to encrypt messages. The general idea behind the encryption of RSA is that the factors of the two generated messages cannot be recovered from $n$. RSA will generate two different random numbers which are odd prime numbers. The product is then taken from these values. A new value (e) is then introduced which is a prime number relative to $n$. The pair (n, e) is then the public key. The decryption is then computed with ne $\equiv$ 1 mod (n). (n,d) is then used as the private key. This is just one of the other possible methods of encryption available.
@@ -207,14 +207,15 @@ A \emph{relation} is a subset of the product of sets, which is written as $R \su
 \chapter{Block Ciphers}
 \label{cha:BCipher}
 
-A block cipher is defined as a symmetric-key encryption scheme with
+A block cipher is a symmetric-key encryption scheme (see \ref{sec:Term}) were $n$ is the block length of the cipher \cite{DBLP:series/isc/DelfsK07}.
 \begin{displaymath}
  M = C = \{0,1\}^{n}
 \end{displaymath}
- $n$ is the block length of the cipher \cite{DBLP:series/isc/DelfsK07}. Block ciphers are used to encrypt blocks of bits of a fixed length to a new different output \cite{DBLP:books/sp/Buchmann02}. For example if the input length of a block cipher is 8 bits, then the output block cipher will also be 8 bits long. A block cipher is referred to as a cryptosystem if its plain text and cipher text are of the same length.A block cipher will map an original Plain text into a cipher text with the use of permutation. Block ciphers are closely related to binary arithmetic in how to calculate the new values and current values of which will be shown later.
-A block cipher is made up of two algorithms which we will call E and D (Encryption and decryption algorithm). Both of these algorithms take in a key called K. Given a Plain text (PT) the encryption will take in a key and map both these inputs to an output. This output is the Cipher text (CT). This can be seen in Figure \ref*{fig:2.2.1}
+The formula above describes the length of both a message and a cipher text being equal to each other represented in binary digits 0 or 1. 
+Block ciphers are used to encrypt blocks of bits of a fixed length to a new different output \cite{DBLP:books/sp/Buchmann02}. For example if the input length of a block cipher is 8 bits, then the output block cipher will also be 8 bits long. A block cipher is referred to as a cryptosystem if its plain text and cipher text are of the same length. A block cipher will map an original Plain text into a cipher text with the use of permutation. Block ciphers are closely related to binary arithmetic in how to calculate the new values and current values of which will be shown later in Chapter \ref{cha:DES}.
+A block cipher is made up of two algorithms which we will call E and D (Encryption and decryption algorithm). Both of these algorithms take in a key called K. Given a Plain text (P) the encryption will take in a key and map both these inputs to an output. This output is the Cipher text (C). This can be seen in Figure \ref*{fig:2.2.1}
 
-
+%image is not implemented becasue latex does not like displaying .png files. The image is found in the same folder as this document and does not bring anything new to the paper but helps the reader visualy see a block cipher. As a priority it is not high on the list and will be implemented later on
 \begin{figure}[H]
 \centering
 %\includegraphics[scale=0.5]{BlockCipher.png}
@@ -224,32 +225,34 @@ A block cipher is made up of two algorithms which we will call E and D (Encrypti
 
 
 
-The reason block ciphers are useful is that it takes in $n$ inputs and outputs $n$. Block ciphers are built by iteration were they take in as an input a key K. The key K will then be expanded into $K_{1}, K_{2},..., K_{n}$. These are called \emph{round keys}. The cipher will use these round keys by encrypting the message a number of times. So the encryption would work by taking producing a new message with each computation of th message and a key $R: (K_{1}, M)$ respectively. This will produce a message ($m_{1}$) were it will go through the same process with a different key until all the round keys are computed. Once all the rounds are complete one is left with C.
-%From here on to the end of the chapter needs work. Possibly put sub sections to define explain and example each topic. 
-Block ciphers can encrypt messages of arbitrary length. There are different properties and issues that must be looked at regarding the different lengths. First we look at where the plain text is greater than the cipher text (P $\textless$ C). This essentially means that our input is grater than our output. Practically this does not make sense as there will be a lose of data within the cipher text. However an alternative view would be that error checking was in the plain text , so therefore they were parity bits. In this regard this arbitrary block cipher would be acceptable.
+Block ciphers are useful as they take in $n$ inputs and outputs $n$. Block ciphers are built by iteration were they take in as an input a key K. The key K will then be expanded into $K_{1}, K_{2},..., K_{n}$. These are called \emph{round keys}. The cipher will use these round keys by encrypting the message a number of times. So the encryption would work by producing a new message with each computation of the message and a key $R: (K_{1}, M)$ respectively. This will produce a message ($m_{1}$) were it will go through the same process with a different key until all the round keys are computed. Once all the rounds are complete one is left with C.
 
-An alternative block cipher encryption would be if the plain text contains less bits than the cipher text (P $\textgreater$ C). This will essentially mean that random useless data is added onto the cipher text. As a result of this, in theory, the cipher text is securer in terms of plain text attacking. This is due to the user having to use up more time to try and find meaning to the random useless bits therefore taking more time to crack.
+\section{Characteristics of block ciphers}
+In this section of block ciphers, we will look at the unique characteristics of block ciphers in terms of their different lengths and security. The security aspect of block ciphers will also mean an in depth look at the characteristics of the keys which are used in the encryption. 
 
-The security of an encryption is determined by its key. Specifically the more key iterations a encryption has, the more secure/ harder it will be to break. A encryption with only one key will encrypt a plain text once. This is less effective in terms of security compared to a plain text that uses more keys. This is due to the fact that the randomness of the cipher text increases.
+\subsection{Block ciphers of different lengths}
+As previously declared, block ciphers length of a message will be equal to the cipher text that is output using the formula 
+\begin{displaymath}
+ M = C = \{0,1\}^{n}
+\end{displaymath}
+However if such a case was to arise where the plain text is smaller or greater that the cipher text then this will cause complications. Therefore there are different properties and issues that must be looked at regarding the different lengths. First we look at where the plain text is greater than the cipher text (P $\textless$ C). This essentially means that our input is grater than our output. Practically this does not make sense as there will be a lose of data within the cipher text.
 
-\emph{Weak keys} in cryptography are keys which when used with a plain text will result in a cipher text with specific properties. These properties are unfavourable as it leads to a security problem. It should be noted that weak keys are rare due to the amount of keys available to encrypt a message, but do raise a major flaw in the security of a message. As a result it is often attempted to reduce the chance of obtaining a weak key. An example of a weak key would be if all the bits are all 1's, 0's or alternating 0's and 1's. The consequence of using a weak key to encrypt a block cipher and then encrypt the result with the same weak key, we will obtain the original block cipher.
+However an alternative view would be that error checking was in the plain text, so therefore they were parity bits. In this regard this arbitrary block cipher would be acceptable. An alternative block cipher encryption would be if the plain text contains less bits than the cipher text (P $\textgreater$ C). This will essentially mean that random useless data is added onto the cipher text. As a result of this, in theory, the cipher text is securer in terms of plain text attacking. This is due to the user having to use up more time to try and find meaning to the random useless bits therefore taking more time to break.
+
+\subsection{Security of block ciphers}
+The security of an encryption is determined by its key. Specifically the more key iterations a encryption has, the more secure/ harder it will be to break. A encryption with only one key will encrypt a plain text once. This is less effective in terms of security compared to a plain text that uses more keys. This is due to the fact that the randomness of the cipher text increases thus making it harder to break.
+
+\emph{Weak keys} in cryptography are keys which when used with a plain text will result in a cipher text with specific properties. These properties are unfavourable as it leads to a security problem. It should be noted that weak keys are rare due to the amount of keys available to encrypt a message, but do raise a major flaw in the security of a message. As a result it is often attempted to reduce the chance of obtaining a weak key. An example of a weak key would be if all the bits of a key are all 1's, 0's or alternating 0's and 1's. We can show the effect of a weak key if given a plain text $\{0110\}$ which in binary values is 6, is mapped with a key $\{0000\}$ then the cipher text will be $\{0110\}$ which in binary values is 6. Therefore we have obtained a cipher text. However the cipher text is equal to the original plain text. As a result the plain text's message is still visible to the user, which for an attacker means they can gather information from the plain text.  
+
+The consequence of using a weak key to encrypt a block cipher and then encrypt the result with the same weak key, we will obtain the original block cipher.
 
 
-
-
-
-
-
-
-
-
-
-There are "basic properties" given with keys to show that keys will always map to different outputs. In other words, if we are given two different keys, there exists a mapping for each key such that there will always be a different output (never both map to the same value). In other words, encryption key 1 (E$_{K1}$) is not equal to encryption key 2 (E$_{K2}$) in terms of mapping to the same cipher text (C).
+\subsection{Strong property of keys}
+There are basic properties given with keys to show that keys will always map to different outputs. Therefore if we are given two different keys, there exists a mapping for each key such that there will always be a different output thus never both mapping to the same output. In other words, encryption key 1 (E$_{K1}$) is not equal to encryption key 2 (E$_{K2}$) in terms of mapping to the same cipher text (C). We will refer to this as a \emph{strong property}.  
 \begin{displaymath}
 E_{K1} \neq E_{K2} \rightarrow C
 \end{displaymath}
 An example of this would be given a plain text of 1 bit in length that is assigned to binary value 1 and two keys each one bit in length where E$_{K1}$ is assigned to 0 and another key E$_{K2}$ is assigned 1. In the example given below, we are looking for two cipher texts not to be equal.
-
 A toy example of this strong property would be:
 
 \begin{figure}[H]
@@ -278,14 +281,15 @@ P & E$_{K1}$ & E$_{K2}$ & P $\oplus$ E$_{K1}$ & P $\oplus$ E$_{K2}$\\ \hline
 \end{figure}
 
 The output of P $\oplus$ E$_{K1}$ is equivalent to saying it is cipher text 1 (C$_1$) and P $\oplus$ E$_{K2}$ is equivalent to cipher text 2 (C$_2$). Therefore we have proven that the output C$_1$ $\neq$ C$_2$.
- As seen in figure \ref{tab:XOR function} two different keys do not map to the same output. As a result this is a "Strong property" of keys which is desirable when looking at the security of a block cipher.
+ As seen in figure 3.3 two different keys do not map to the same output. As a result this is a "Strong property" of keys which is desirable when looking at the security of a block cipher.
 
- A \emph{Duplicate key} is a key with the same identical property of another key. This property is deriving the same Cipher text. Given two keys and using the domain Plain text \{P\}* which denotes the set of all possible Plain texts, the key will map \{P\}* to the set of all possible Cipher texts \{C\}*.
- \begin{displaymath}
- \{P\}* \rightarrow \{C\}*
- \end{displaymath}
- The duplicate key is of such that has the identical mapping. The same mapping is therefore defined by two given tables that are both naturally ordered, if and only if each row in the first table matches the second and each row in the second table matches the first table.
- An example of a duplicate key would be given C$_{K1}$(P) which denotes the cipher text using the key K$_1$ from the domain P and C$_{K2}$(P) denotes the cipher text using the key K$_2$ from the domain P where domain P in this case is the same for each Cipher text.
+\subsection{Duplicate key}
+A \emph{Duplicate key} is a key with the same identical property of another key. This property is deriving the same Cipher text. Given two keys and using the domain Plain text \{P\}* which denotes the set of all possible Plain texts, the key will map \{P\}* to the set of all possible Cipher texts \{C\}*.
+\begin{displaymath}
+ \{P\}^* \rightarrow \{C\}^*
+\end{displaymath}
+The duplicate key is of such that has the identical mapping. The same mapping is therefore defined by two given tables that are both naturally ordered, if and only if each row in the first table matches the second and each row in the second table matches the first table.
+An example of a duplicate key would be given C$_{K1}$(P) which denotes the cipher text using the key K$_1$ from the domain P and C$_{K2}$(P) denotes the cipher text using the key K$_2$ from the domain P where domain P in this case is the same for each Cipher text.
 
 
 \begin{figure}
@@ -320,7 +324,7 @@ P & K$_2$ & C$_{K2}$ \\ \hline
 \end{table}
 \end{figure}
 
-By our previous hypothesis, if we take each row from table \ref{tab:C1} and table \ref{tab:C2} then we can evaluate them as equal. Therefore K$_1$ and K$_2$ map the same Plain text to the Cipher text.
+By our previous hypothesis, if we take each row from table 3.1 and table 3.2 then we can evaluate them as equal. Therefore K$_1$ and K$_2$ map the same plain text to the cipher text.
 
 \begin{displaymath}
 C_{K1}(P) = C_{K2}(P)
@@ -354,8 +358,9 @@ DES: \{0,1\}^{64} \times \{0,1\}^{56} \rightarrow \{0,1\}^{64}
 \end{displaymath}
 DES is constructed by taking in a 64 bit Plain text, mapping it to an encryption key which is 56 bits long, which will give a 64 bit Cipher text.
 
-\textbf{Feistel Network}
-DES uses an algorithm to encrypt data which is called the Feistel network \cite{DBLP:books/sp/Buchmann02}. It works by using permutation, XOR functions (see \ref{Figure:4.2.3}) and round keys in order to encrypt messages. The Feistel network uses arbitrary functions $f_{1},...,f_{d}$ which maps:
+\subsection{Feistel Network}
+\label{subsec:FeistelNet}
+DES uses an algorithm to encrypt data which is called the Feistel network \cite{DBLP:books/sp/Buchmann02}. It works by using permutation, XOR functions (see \ref{Figure:5.1.2}) and round keys in order to encrypt messages. The Feistel network uses arbitrary functions $f_{1},...,f_{d}$ which maps:
 \begin{displaymath}
 FeistelNetwork: \{0,1\}^n \rightarrow \{0,1\}^n
 \end{displaymath}
@@ -364,6 +369,7 @@ The aim of the Feistel network is to build up an intervertebral function
 F: \{0,1\}^{2n} \rightarrow \{0,1\}^{2n}
 \end{displaymath}
 This function will then encrypt the message (P). We start off with two separate inputs which we will call R$_{0}$ and L$_{0}$ made up of both n bits. The total input is 2n - bits. At the first stage the R$_{0}$ will become the L$_{1}$ without any change as seen on the diagram below. However the L inputs is changed. This is done by taking the R$_{0}$ input and feeding it into the arbitrary function f$_{1}$, and the result is then XOR with L$_{0}$. This output will then become R$_{1}$ input. This process is called one round of the Feistel network.
+%image is not implemented becasue latex does not like displaying .png files. The image is found in the same folder as this document and does not bring anything new to the paper but helps the reader visualy see DES. As a priority it is not high on the list and will be implemented later on
 \begin{figure}[h]
 \centering
 %\includegraphics[width=12cm, height=5cm]{FeistelNet.png}
@@ -541,7 +547,7 @@ $p$ & $\neg p$\\ \hline
 \caption{Negation.}
 \end{figure}
 
-As seen in Figure \ref{tab:negation} the $\neg p$ will always have a value that is opposite $p$.
+As seen in Figure 5.1 the $\neg p$ will always have a value that is opposite $p$.
 The logical \emph{functors} each have a unique output if called upon using a set of Bool elements.
 \begin{center}
 \begin{tabular}{|c|c||c|c|c|c|c|}
@@ -555,7 +561,7 @@ $p$ & $q$ & $p \land q$ & $p \lor q$ & $p \Rightarrow q$ & $p \equiv q$ & $p \op
 \end{tabular}
 \end{center}
 \begin{center}
-\label{Figure:4.2.3}{Figure 4.2.3: Five binary functors.}
+\label{Figure:5.1.2}{Figure 5.1.2: Five binary functors.}
 \end{center}
 The \emph{Conjunction} functor ($\land$) takes two Bool elements from a set $\{0,1\}$ and will return true if the elements of both elements are $1$. If however either one of the two elements or both are $0$, then the Conjunction of the two elements will return $0$. The \emph{Disjunction} functor $(\lor)$ takes two Bool elements from a set $\{0,1\}$ and will return a true value if both elements are valued as $1$, or either one of the two elements are equal to $1$. If however neither of the two elements are equal to $1$, then the Disjunction will return $0$. The \emph{Implication} functor $(\Rightarrow)$ takes two Bool from a set $\{0,1\}$ and will return true if both elements are equal to $1$, both elements are equal to $0$ or the first element is $0$ and the second element is $1$, as this says that false implies true which is true. However the implication functor will return true if the elements assignments are for the first element $1$ and the second is $0$, as this implies that truth implies false which is false. \emph{Equivalence} functor takes two Bool elements from a set $\{0,1\}$ and will return true if the elements assignments are both either $1$ or $0$. However, if one of the two elements is $1$ while the other is $0$, then the equivelance of the two elements will evaluate to $0$.
 
@@ -714,7 +720,7 @@ This relation holds if and only if encrypt$_{b}$ (P,K) = C.
 As a result of this relation, we have a satisfiability problem.
 
 \section{Example of block cipher to SAT }
-If we were to consider a block cipher that had one key bits for both the key, Plain text and Cipher text then it is easy to understand the fundamentals of how the SAT computation can be done in a bigger picture. This will eventually be shown in Chapter 7 \ref{cha:AppDESSAT}. If we start with a basic example where each variable has a length of 1, then:
+If we were to consider a block cipher that had one key bits for both the key, Plain text and Cipher text then it is easy to understand the fundamentals of how the SAT computation can be done in a bigger picture. This will eventually be shown in Chapter \ref{cha:AppDESSAT}. If we start with a basic example where each variable has a length of 1, then:
 
 \begin{displaymath}
 N: (P, C) = 1
@@ -769,7 +775,6 @@ Plain text & Key & Cipher & Output\\ \hline
 \end{center}
 We find the output by taking each variable \{P,K,C\} = \{P$_{1}$, K$_{1}$, C$_{1}$\}. If we take the first row we can see the variables are \{0,0,0\}. We then use this and look at the previous table to see if the same three values appear. The set \{0,0,0\} appears on the first line, so therefore the output will be one. However if the set does not appear then we represent the output as a 0. Once the table is completed one can start to construct CNF statements.
 The CNF clauses for the table constructed with an output would be:
-
 \begin{displaymath}
 (P_{1} \lor K_{1} \lor \neg C_{1}) \land (\neg P_{1} \lor K_{1} \lor C_{1}) \land (P_{1} \lor \neg K_{1} \lor \neg C_{1}) \land (\neg P_{1} \lor \neg K_{1} \lor C_{1})
 \end{displaymath}
@@ -811,8 +816,7 @@ Github is a file sharing hosting service which allows users to interact with ope
 Git is a program that allows a user to push pull and fork repository's and mainly keep track of the files located on a users system. Git uses the command line bash to execute commands in relation to the git files.
 
 
-\chapter{Computing DES through SAT}
-\label{cha:DESsat}
+
 
 \chapter{Evaluation}
 \label{cha:Eval}
